@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_adicionar_doenca"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/fundo"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="br.com.code85.lifepower.activities.AdicionarDoencaActivity"
+    tools:showIn="@layout/activity_adicionar_doenca">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:shrinkColumns="*">
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:text="@string/tipo_sanguineo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/sp_doenca_alergia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/array_doenca_alergia" />
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:id="@+id/tableRow">
+
+            <TextView
+                android:text="@string/nome_doenca_alergia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tableRow"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/nome_doenca_alergia" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+
+    <Button
+        android:text="@string/adicionar"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/BlueButton"
+        android:textColor="@color/textIcons"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="122dp"
+        android:onClick="salvarDados"/>
+
+
+</RelativeLayout>

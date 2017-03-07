@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_informacoes"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/fundo"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="br.com.code85.lifepower.activities.InformacoesActivity"
+    tools:showIn="@layout/activity_informacoes">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <at.markushi.ui.CircleButton
+                    android:layout_width="100dip"
+                    android:layout_height="100dip"
+                    android:src="@drawable/ic_account_white_36dp"
+                    app:cb_color="@color/blueButton"
+                    app:cb_pressedRingWidth="8dip"
+                    android:id="@+id/buttonCadastrar"
+                    android:onClick="cadastrar"
+                    android:layout_marginRight="70dp"/>
+
+
+                <at.markushi.ui.CircleButton
+                    android:layout_width="100dip"
+                    android:layout_height="100dip"
+                    android:src="@drawable/ic_hospital_white_36dp"
+                    app:cb_color="@color/blueButton"
+                    app:cb_pressedRingWidth="8dip"
+                    android:id="@+id/buttonAdicionarDoenca"
+                    android:onClick="adicionarDoencaAlergia" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:text="@string/cadastrar_dados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewCadastrar" />
+
+                <TextView
+                    android:text="@string/adicionar_alergias_doencas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewAdicionar" />
+
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp">
+
+                <at.markushi.ui.CircleButton
+                    android:layout_width="100dip"
+                    android:layout_height="100dip"
+                    android:src="@drawable/ic_medical_bag_white_36dp"
+                    app:cb_color="@color/blueButton"
+                    app:cb_pressedRingWidth="8dip"
+                    android:id="@+id/buttonExibir"
+                    android:onClick="exibirDoencaAlergia"
+                    android:layout_marginRight="70dp"/>
+
+
+                <at.markushi.ui.CircleButton
+                    android:layout_width="100dip"
+                    android:layout_height="100dip"
+                    android:src="@drawable/ic_show_chart_white_36dp"
+                    app:cb_color="@color/blueButton"
+                    app:cb_pressedRingWidth="8dip"
+                    android:id="@+id/buttonMonitoramento"
+                     />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:text="@string/exibir_alergias_doencas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewExibir" />
+
+                <TextView
+                    android:text="@string/monitoramento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewMonitoramento" />
+
+            </TableRow>
+
+        </TableLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/linha"
+                android:layout_marginTop="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.rey.material.widget.ProgressView
+                    android:id="@+id/circular_progress"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    app:pv_autostart="true"
+                    app:pv_circular="true"
+                    app:pv_progressMode="indeterminate"
+                    app:pv_progressStyle="@style/Material.Drawable.CircularProgress" />
+
+                <TextView
+                    android:text="@string/dados_do_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:background="#99000000"
+                    android:textColor="@color/textIcons"/>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="1">
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/nome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/nome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        />
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/idade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/idade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        />
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/rg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/rg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        />
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/telefones"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/telefones"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        />
+
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/sexo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/sexo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        />
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/rua"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/rua"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        />
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/bairro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/bairro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        />
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/tipo_sanguineo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/tipo_sanguineo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        />
+                </TableLayout>
+
+                <TextView
+                    android:text="@string/telefones_de_familiares_e_amigos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#99000000"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

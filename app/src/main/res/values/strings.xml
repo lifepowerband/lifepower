@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">LifePower</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="repita_senha">Repita a senha</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="facebook">Entrar com o Facebook</string>
+    <string name="entrar">Entrar</string>
+    <string name="crie_sua_conta">Crie sua conta</string>
+    <string name="nome">Nome:</string>
+    <string name="idade">Idade:</string>
+    <string name="rg">RG:</string>
+    <string name="telefones">Telefone:</string>
+    <string name="sexo">sexo:</string>
+    <string name="rua">Rua:</string>
+    <string name="numero">Número:</string>
+    <string name="complemento">Complemento:</string>
+    <string name="bairro">Bairro:</string>
+    <string name="tipo_sanguineo">Tipo Sanguíneo:</string>
+    <string name="selecione">Selecione:</string>
+    <string name="nome_doenca_alergia">Nome da doença/alergia:</string>
+    <string name="salvar">Salvar</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="title_activity_informacoes">Informações</string>
+    <string name="cadastrar_dados">Cadastrar Dados</string>
+    <string name="adicionar_alergias_doencas">Adicionar doenças</string>
+    <string name="exibir_alergias_doencas">Exibir doenças</string>
+    <string name="monitoramento">Monitoramento</string>
+    <string name="title_activity_cadastro">Cadastro</string>
+    <string name="title_activity_cadastro_usuario">Cadastro de usuário</string>
+    <string name="title_activity_exibir_doenca">Exibir doenças e alergias</string>
+    <string name="title_activity_adicionar_doenca">Adicionar doenças e alergias</string>
+    <string name="dados_do_usuario">Dados do usuário</string>
+    <string name="telefones_de_familiares_e_amigos">Telefones para emergência(família ou amigos)</string>
+    <string name="nome1">Nome 1:</string>
+    <string name="nome2">Nome 2:</string>
+
+    <string name="facebook_app_id">1623644964610978</string>
+
+
+    <string-array name="array_tipo_sanguineo">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
+
+    <string-array name="array_doenca_alergia">
+        <item>Doença</item>
+        <item>Alergia</item>
+    </string-array>
+
+    <string-array name="array_sexo">
+        <item>Masculino</item>
+        <item>Feminino</item>
+    </string-array>
+</resources>
