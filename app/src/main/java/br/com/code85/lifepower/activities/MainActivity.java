@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         UsuarioService usuarioService = retrofit.create(UsuarioService.class);
         //Cria o objeto Login para ser comparado com o do servidor
         Login login = new Login(editTextEmail.getText().toString(),editTextSenha.getText().toString());
-        Call<Usuario> requestUsuario = usuarioService.fazerLogin(login);
+        Call<Usuario> requestUsuario = usuarioService.loginGet(login);
 
         //Chamada assíncrona
         requestUsuario.enqueue(new Callback<Usuario>() {

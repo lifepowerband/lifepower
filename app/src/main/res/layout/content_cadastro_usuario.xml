@@ -14,7 +14,7 @@
     tools:showIn="@layout/activity_cadastro_usuario">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
@@ -26,7 +26,7 @@
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
@@ -38,7 +38,7 @@
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
@@ -56,7 +56,7 @@
         android:backgroundTint="@color/blueButton"
         android:textColor="@color/textIcons"
         android:id="@+id/button3"
-        android:onClick="salvarUsuario"
+        android:onClick="loginPost"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"

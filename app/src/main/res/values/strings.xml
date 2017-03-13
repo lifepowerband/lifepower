@@ -22,7 +22,7 @@
     <string name="salvar">Salvar</string>
     <string name="adicionar">Adicionar</string>
     <string name="title_activity_informacoes">Informações</string>
-    <string name="cadastrar_dados">Cadastrar Dados</string>
+    <string name="cadastrar_dados">Atualizar Cadastro</string>
     <string name="adicionar_alergias_doencas">Adicionar doenças</string>
     <string name="exibir_alergias_doencas">Exibir doenças</string>
     <string name="monitoramento">Monitoramento</string>

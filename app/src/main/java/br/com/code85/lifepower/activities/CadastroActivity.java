@@ -11,10 +11,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.rey.material.widget.ProgressView;
 
 import br.com.code85.lifepower.R;
 //import br.com.code85.lifepower.dao.UsuarioDao;
+import br.com.code85.lifepower.helper.UsuarioService;
 import br.com.code85.lifepower.model.Usuario;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CadastroActivity extends AppCompatActivity {
     Usuario usuario;
@@ -33,6 +42,7 @@ public class CadastroActivity extends AppCompatActivity {
     private String tipoSangue;
     private SharedPreferences sp;
     private Integer idUsuario;
+    private ProgressView progressView;
 
 
     @Override
@@ -56,6 +66,9 @@ public class CadastroActivity extends AppCompatActivity {
         sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         idUsuario = sp.getInt("idUsuario", 0);
 
+        progressView  = (ProgressView)findViewById(R.id.circular_progress);
+        progressView.setVisibility(View.GONE);
+
         editTextNome = (EditText) findViewById(R.id.nome);
         editTextIdade = (EditText) findViewById(R.id.idade);
         editTextRg = (EditText) findViewById(R.id.rg);
@@ -68,34 +81,69 @@ public class CadastroActivity extends AppCompatActivity {
         spTipoSangue = (Spinner) findViewById(R.id.sp_tipo_sanguineo);
 
 
+        inicializarRetrofit();
         carregarSpinnerSexo();
         carregarSpinnerTipoSangue();
 
     }
 
-    /*public void salvarDados(View view){
+    private void inicializarRetrofit(){
+        progressView.setVisibility(View.VISIBLE);
+        progressView.start();
+        //Montando um obejto retrofit passando a url base e o converson de Json
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UsuarioService.URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        try {
-            usuario.setNome(editTextNome.getText().toString());
-            usuario.setIdade(Integer.parseInt(editTextIdade.getText().toString()));
-            usuario.setRg(editTextRg.getText().toString());
-            usuario.setTelefone(editTextTelefone.getText().toString());
-            usuario.setSexo(sexo);
-            usuario.setRua(editTextRua.getText().toString());
-            usuario.setNumero(Integer.parseInt(editTextNumero.getText().toString()));
-            usuario.setComplemento(editTextComplemento.getText().toString());
-            usuario.setBairro(editTextBairro.getText().toString());
-            usuario.setTipoSangue(tipoSangue);
-            usuarioDao.update(usuario);
+        //Pega o id do usuário salvo na sessão
+        sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        idUsuario = sp.getInt("idUsuario", 0);
 
-            Toast.makeText(this, "Perfil cadastrado com sucesso!", Toast.LENGTH_LONG).show();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Erro!", Toast.LENGTH_LONG).show();
-        }
+        // retorna uma classe que implementa UsuarioService
+        UsuarioService usuarioService = retrofit.create(UsuarioService.class);
+        Call<Usuario> requestUsuario = usuarioService.buscarUsuarioPorId(idUsuario);
 
-        irParaInformacoes();
-    }*/
+        //Chamada assíncrona
+        requestUsuario.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Erro: " + response.code(), Toast.LENGTH_LONG).show();
+                }else{
+                    //Requisição retornou com sucesso
+                    Usuario usuario = response.body();
+                    setarInformacoes(usuario);
+                    progressView.stop();
+                    progressView.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                //Erro de rede
+                Toast.makeText(getApplicationContext(), "Erro: " + t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+    }
+
+    private void setarInformacoes(Usuario usuario){
+        editTextNome.setText(usuario.getNome());
+        editTextIdade.setText(usuario.getIdade() + "");
+        editTextRg.setText(usuario.getRg());
+        editTextTelefone.setText(usuario.getTelefone());
+        //textViewSexo.setText(usuario.getSexo());
+        editTextRua.setText(usuario.getRua());
+        editTextBairro.setText(usuario.getBairro());
+        editTextNumero.setText(usuario.getNumero()+"");
+        editTextComplemento.setText(usuario.getComplemento());
+        //textViewTipoSangue.setText(usuario.getTipoSangue());
+    }
+
+
 
     private void carregarSpinnerSexo(){
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.array_sexo,android.R.layout.simple_spinner_item);

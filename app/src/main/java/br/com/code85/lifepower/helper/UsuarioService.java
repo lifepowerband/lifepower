@@ -6,6 +6,8 @@ import br.com.code85.lifepower.model.Login;
 import br.com.code85.lifepower.model.Usuario;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -22,6 +24,13 @@ public interface UsuarioService {
     @GET("usuario/get/{id}")
     Call<Usuario> buscarUsuarioPorId(@Path("id") Integer id);
 
+    //Método para login
     @POST("usuario/entrar")
-    Call<Usuario> fazerLogin(@Body Login login);
+    Call<Usuario> loginGet(@Body Login login);
+
+    //Método para o pré-cadastro somente com email e senha
+    @FormUrlEncoded
+    @POST("usuario/inserir")
+    Call<Boolean> loginPost(@Field("metodo") String metodo, @Field("email") String email, @Field("senha") String senha);
+
 }
