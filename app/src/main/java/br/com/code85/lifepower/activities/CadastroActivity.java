@@ -144,7 +144,6 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
 
-
     private void carregarSpinnerSexo(){
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.array_sexo,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
