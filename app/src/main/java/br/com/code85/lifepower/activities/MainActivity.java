@@ -9,8 +9,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Arrays;
 
 import br.com.code85.lifepower.R;
@@ -50,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
-        /*loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 //Sucesso no Login
@@ -69,14 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Erro ao fazer login!", Toast.LENGTH_LONG).show();
 
             }
-        });*/
-
-        /*dh = new DatabaseHelper(this);
-        try {
-            usuarioDao = new UsuarioDao(dh.getConnectionSource());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
+        });
 
         editTextEmail = (EditText) findViewById(R.id.email);
         editTextSenha = (EditText) findViewById(R.id.senha);
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Obtem e salva os alguns dados do facebook no banco
-    /*private void obterDadosDoFacebook(AccessToken accessToken){
+    private void obterDadosDoFacebook(AccessToken accessToken){
         //Para obter o email, precisamos de uma consulta a Graph API
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
             @Override
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         request.setParameters(parameters);
         request.executeAsync();
 
-    }*/
+    }
 
     /*private void salvarUsuarioFacebook(String nome, String email){
         usuario = new Usuario();
@@ -191,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         UsuarioService usuarioService = retrofit.create(UsuarioService.class);
         //Cria o objeto Login para ser comparado com o do servidor
         Login login = new Login(editTextEmail.getText().toString(),editTextSenha.getText().toString());
-        Call<Usuario> requestUsuario = usuarioService.loginGet(login);
+        Call<Usuario> requestUsuario = usuarioService.login(login);
 
         //Chamada assíncrona
         requestUsuario.enqueue(new Callback<Usuario>() {
@@ -211,6 +214,58 @@ public class MainActivity extends AppCompatActivity {
                         editor.commit();
 
                         Toast.makeText(getApplicationContext(), "Seja bem vindo " + usuario.getNome(), Toast.LENGTH_LONG).show();
+                        chamarTelaPrincipal();
+
+                    } else{
+                        Toast.makeText(getApplicationContext(), "Usuário ou senha inválidos!", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                //Erro de rede
+                Toast.makeText(getApplicationContext(), "Erro: " + t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    public void fazerLoginPorEmailFacebook(final String nome, String email){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(UsuarioService.URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        UsuarioService usuarioService = retrofit.create(UsuarioService.class);
+        Login login = new Login(editTextEmail.getText().toString());
+        Call<Usuario> requestUsuario = usuarioService.loginFacebook(login);
+
+        //Chamada assíncrona
+        requestUsuario.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Erro: " + response.code(), Toast.LENGTH_LONG).show();
+                }else{
+                    //Requisição retornou com sucesso
+                    Usuario usuario = response.body();
+
+                    if(usuario != null){
+                        //Responsável por guardar a sessão do usuário
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putInt("idUsuario", usuario.getId());
+                        editor.commit();
+
+                        if(nome != null){
+                            Toast.makeText(getApplicationContext(), "Seja bem vindo " + nome, Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Seja bem vindo", Toast.LENGTH_LONG).show();
+                        }
+
                         chamarTelaPrincipal();
 
                     } else{

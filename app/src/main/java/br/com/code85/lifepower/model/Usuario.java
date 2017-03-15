@@ -9,54 +9,75 @@ public class Usuario {
     @SerializedName("id")
     @Expose
     private Integer id;
+
     @SerializedName("nome")
     @Expose
     private String nome;
+
     @SerializedName("idade")
     @Expose
     private Integer idade;
+
     @SerializedName("rg")
     @Expose
     private String rg;
+
     @SerializedName("telefone")
     @Expose
     private String telefone;
+
     @SerializedName("sexo")
     @Expose
     private String sexo;
+
     @SerializedName("rua")
     @Expose
     private String rua;
+
     @SerializedName("numero")
     @Expose
     private Integer numero;
+
     @SerializedName("complemento")
     @Expose
     private String complemento;
+
     @SerializedName("bairro")
     @Expose
     private String bairro;
+
     @SerializedName("tipo_sangue")
     @Expose
     private String tipoSangue;
+
     @SerializedName("email")
     @Expose
     private String email;
+
+    @SerializedName("senha")
+    @Expose
+    private String senha;
+
     @SerializedName("nome1")
     @Expose
     private String nome1;
+
     @SerializedName("numero1")
     @Expose
     private String numero1;
+
     @SerializedName("numero2")
     @Expose
     private String numero2;
+
     @SerializedName("nome2")
     @Expose
     private String nome2;
+
     @SerializedName("doencas")
     @Expose
     private List<String> doencas = null;
+
     @SerializedName("alergias")
     @Expose
     private List<String> alergias = null;
@@ -68,7 +89,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nome, Integer idade, String rg, String telefone, String sexo, String rua, Integer numero, String complemento, String bairro, String tipoSangue, String email, String nome1, String numero1, String numero2, String nome2, List<String> doencas, List<String> alergias) {
+    public Usuario(Integer id, String nome, Integer idade, String rg, String telefone, String sexo, String rua, Integer numero, String complemento, String bairro, String tipoSangue, String email, String senha,String nome1, String numero1, String numero2, String nome2, List<String> doencas, List<String> alergias) {
         super();
         this.id = id;
         this.nome = nome;
@@ -82,6 +103,7 @@ public class Usuario {
         this.bairro = bairro;
         this.tipoSangue = tipoSangue;
         this.email = email;
+        this.senha = senha;
         this.nome1 = nome1;
         this.numero1 = numero1;
         this.numero2 = numero2;
@@ -184,6 +206,14 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getNome1() {

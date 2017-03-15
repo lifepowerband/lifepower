@@ -56,7 +56,7 @@
         android:backgroundTint="@color/blueButton"
         android:textColor="@color/textIcons"
         android:id="@+id/button3"
-        android:onClick="loginPost"
+        android:onClick="cadastrarUsuario"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"

@@ -1,12 +1,17 @@
 package br.com.code85.lifepower.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.code85.lifepower.R;
 import br.com.code85.lifepower.helper.UsuarioService;
@@ -18,7 +23,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
-    Usuario usuario;
     private EditText editTextEmail;
     private EditText editTextSenha;
     private EditText editTextRepitaSenha;
@@ -45,7 +49,10 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         editTextRepitaSenha = (EditText) findViewById(R.id.repitaSenha);
     }
 
-    public void loginPost(View view){
+    public void cadastrarUsuario(View view){
+
+        List<String> doencas = new ArrayList<>() ;
+        List<String> alergias = new ArrayList<>();
 
         if(editTextSenha.getText().toString().equals(editTextRepitaSenha.getText().toString())){
             Retrofit retrofit = new Retrofit.Builder()
@@ -55,7 +62,27 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
             UsuarioService usuarioService = retrofit.create(UsuarioService.class);
 
-            Call<Boolean> requestUsuario = usuarioService.loginPost("login",editTextEmail.getText().toString(),editTextSenha.getText().toString());
+            Usuario usuario = new Usuario();
+            usuario.setNome("");
+            usuario.setIdade(0);
+            usuario.setRg("");
+            usuario.setTelefone("");
+            usuario.setSexo("");
+            usuario.setRua("");
+            usuario.setNumero(0);
+            usuario.setComplemento("");
+            usuario.setBairro("");
+            usuario.setTipoSangue("");
+            usuario.setEmail(editTextEmail.getText().toString());
+            usuario.setSenha(editTextSenha.getText().toString());
+            usuario.setNome1("");
+            usuario.setNumero1("");
+            usuario.setNome2("");
+            usuario.setNumero2("");
+            usuario.setDoencas(doencas);
+            usuario.setAlergias(alergias);
+
+            Call<Boolean> requestUsuario = usuarioService.inserirUsuario(usuario);
 
             requestUsuario.enqueue(new Callback<Boolean>() {
                 @Override
@@ -88,35 +115,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     }
 
     public void chamarTelaPrincipal(){
-        Intent intent = new Intent(this,InformacoesActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
         //Essas flags fazem com que minha tela principal seja a única em execução
         // se acontecer de o usuário apertar o botão voltar, a aplicação não vai retornar pra tela de login
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
-    /*public void salvarUsuario(View view){
-
-        if(editTextSenha.getText().toString().equals(editTextRepitaSenha.getText().toString())){
-            try {
-                usuario.setEmail(editTextEmail.getText().toString());
-                //usuario.setSenha(editTextSenha.getText().toString());
-                usuarioDao.create(usuario);
-
-                Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }else{
-
-            Toast.makeText(this, "As duas senhas estão diferentes!", Toast.LENGTH_LONG).show();
-
-        }
-    }*/
 
     private void irParaInformacoes(){
         Intent intent = new Intent(this,InformacoesActivity.class);

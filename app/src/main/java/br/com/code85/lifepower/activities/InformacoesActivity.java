@@ -75,13 +75,17 @@ public class InformacoesActivity extends AppCompatActivity {
         inicializarRetrofit();
      }
 
-    private void inicializarAccountHeader(Usuario usuario){
+    private void inicializarAccountHeader(String nome, String email){
+
+        if(nome == null){
+            nome = "";
+        }
         // Criando o AccountHeader
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.background)
                 .addProfiles(
-                        new ProfileDrawerItem().withName(usuario.getNome()).withEmail(usuario.getEmail()).withIcon(getResources().getDrawable(R.mipmap.ic_launcher))
+                        new ProfileDrawerItem().withName(nome).withEmail(email).withIcon(getResources().getDrawable(R.mipmap.ic_launcher))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -156,7 +160,7 @@ public class InformacoesActivity extends AppCompatActivity {
                     //Requisição retornou com sucesso
                     Usuario usuario = response.body();
 
-                    inicializarAccountHeader(usuario);
+                    inicializarAccountHeader(usuario.getNome(), usuario.getEmail());
                     setarInformacoes(usuario);
                     progressView.stop();
                     progressView.setVisibility(View.GONE);
