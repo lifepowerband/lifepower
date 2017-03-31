@@ -264,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/nomeParente1" />
+                        android:id="@+id/nomeFamiliar1" />
                 </TableRow>
 
                 <TableRow
@@ -282,7 +282,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="phone"
                         android:ems="10"
-                        android:id="@+id/numeroParente1" />
+                        android:id="@+id/telefoneFamiliar1" />
                 </TableRow>
 
                 <View
@@ -307,7 +307,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/nomeParente2" />
+                        android:id="@+id/nomeFamiliar2" />
                 </TableRow>
 
                 <TableRow
@@ -325,7 +325,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="phone"
                         android:ems="10"
-                        android:id="@+id/numeroParente2" />
+                        android:id="@+id/telefoneFamiliar2" />
                 </TableRow>
 
             </TableLayout>

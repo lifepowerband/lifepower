@@ -34,4 +34,7 @@ public interface UsuarioService {
     @POST("usuario/inserirFacebook")
     Call<Usuario> inserirUsuarioFacebook(@Body Usuario usuario);
 
+    @POST("usuario/atualizar")
+    Call<Boolean> atualizarUsuario (@Body Usuario usuario);
+
 }
