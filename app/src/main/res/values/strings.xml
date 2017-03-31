@@ -32,8 +32,8 @@
     <string name="title_activity_adicionar_doenca">Adicionar doenças e alergias</string>
     <string name="dados_do_usuario">Dados do usuário</string>
     <string name="telefones_de_familiares_e_amigos">Telefones para emergência(família ou amigos)</string>
-    <string name="nome1">Nome 1:</string>
-    <string name="nome2">Nome 2:</string>
+    <string name="familiar1">Familiar 1:</string>
+    <string name="familiar2">Familiar 2:</string>
 
     <string name="facebook_app_id">1623644964610978</string>
 

@@ -21,10 +21,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.rey.material.widget.ProgressView;
 
-import java.util.List;
-
 import br.com.code85.lifepower.R;
-//import br.com.code85.lifepower.dao.UsuarioDao;
 import br.com.code85.lifepower.helper.UsuarioService;
 import br.com.code85.lifepower.model.Usuario;
 import retrofit2.Call;
@@ -44,10 +41,13 @@ public class InformacoesActivity extends AppCompatActivity {
     private TextView textViewRua;
     private TextView textViewBairro;
     private TextView textViewTipoSangue;
+    private TextView textViewFamiliar1;
+    private TextView textViewNumeroFamiliar1;
+    private TextView textViewFamiliar2;
+    private TextView textViewNumeroFamiliar2;
     public static final String PREFS_NAME = "preferencias";
     private SharedPreferences sp;
     private Integer idUsuario;
-    private View view;
     private ProgressView progressView;
 
 
@@ -71,6 +71,10 @@ public class InformacoesActivity extends AppCompatActivity {
         textViewRua = (TextView) findViewById(R.id.rua);
         textViewBairro = (TextView) findViewById(R.id.bairro);
         textViewTipoSangue = (TextView) findViewById(R.id.tipo_sanguineo);
+        textViewFamiliar1 = (TextView) findViewById(R.id.familiar1);
+        textViewNumeroFamiliar1 = (TextView) findViewById(R.id.numeroFamiliar1);
+        textViewFamiliar2 = (TextView) findViewById(R.id.familiar2);
+        textViewNumeroFamiliar2 = (TextView) findViewById(R.id.numeroFamiliar2);
 
         inicializarRetrofit();
      }
@@ -188,6 +192,10 @@ public class InformacoesActivity extends AppCompatActivity {
         textViewRua.setText(usuario.getRua());
         textViewBairro.setText(usuario.getBairro());
         textViewTipoSangue.setText(usuario.getTipoSangue());
+        textViewFamiliar1.setText(usuario.getNome1());
+        textViewNumeroFamiliar1.setText(usuario.getNumero1());
+        textViewFamiliar2.setText(usuario.getNome2());
+        textViewNumeroFamiliar2.setText(usuario.getNumero2());
     }
 
 
@@ -206,44 +214,6 @@ public class InformacoesActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //Se o usuário fizer login normalmente
-/*    private void buscarUsuarioPeloId(){
-        sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        idUsuario = sp.getInt("idUsuario", 0);
-        try {
-            usuario = usuarioDao.queryForId((int) (long) idUsuario);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Se o usuário fizer o login pelo Facebook
-    private void buscarUsuarioPeloEmailDoFacebook(){
-
-        //Recupera o email salvo na sessão do app
-        sp = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String emailFacebook = sp.getString("email", "");
-        System.out.println("Email do Facebook: " + emailFacebook);
-
-        try {
-            QueryBuilder<Usuario, Integer> queryBuilder = usuarioDao.queryBuilder();
-            Where<Usuario, Integer> where = queryBuilder.where();
-            where.eq("email", emailFacebook);
-            PreparedQuery<Usuario> preparedQuery = queryBuilder.prepare();
-            List<Usuario> listaUsuario = usuarioDao.query(preparedQuery);
-
-            if(listaUsuario.size() >0){
-                usuario = listaUsuario.get(0);
-            }
-
-            if(usuario == null){
-                Toast.makeText(this, "Erro ao buscar os dados do usuário!", Toast.LENGTH_LONG).show();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     private void chamarTelaDeLogin(){
         Intent intent = new Intent(this,MainActivity.class);

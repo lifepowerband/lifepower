@@ -21,7 +21,9 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import br.com.code85.lifepower.R;
 //import br.com.code85.lifepower.dao.UsuarioDao;
@@ -39,19 +41,22 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "preferencias";
     private EditText editTextEmail;
     private EditText editTextSenha;
-    private String email;
-    private String senha;
     private SharedPreferences sp;
     private CallbackManager callbackManager;
     private LoginButton loginButton;
     private String nomeFacebook;
-    private Usuario usuario;
     private String emailFacebook;
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(UsuarioService.URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         //Login com o Facebook
         loginButton = (LoginButton) findViewById(R.id.loginButton);
@@ -121,74 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*private void salvarUsuarioFacebook(String nome, String email){
-        usuario = new Usuario();
-        usuario.setNome(nome);
-        usuario.setEmail(email);
-
-        try {
-            usuarioDao.create(usuario);
-            //Responsável por guardar a sessão do usuário
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putInt("idUsuario", usuario.getId());
-            editor.commit();
-
-            System.out.println("Usuário Salvo: " + usuario.getId() + " " + usuario.getNome());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }*/
-
- /*   public void fazerLogin(View view){
-
-        email = editTextEmail.getText().toString();
-        senha = editTextSenha.getText().toString();
-
-        try {
-            QueryBuilder<Usuario, Integer> queryBuilder = usuarioDao.queryBuilder();
-            Where<Usuario, Integer> where = queryBuilder.where();
-            where.eq("email", email);
-            where.and();
-            where.eq("senha", senha);
-            PreparedQuery<Usuario> preparedQuery = queryBuilder.prepare();
-            List<Usuario> listaUsuario = usuarioDao.query(preparedQuery);
-            usuario = null;
-
-            if(listaUsuario.size() >0){
-                usuario = listaUsuario.get(0);
-            }
-
-
-            if(usuario != null){
-                Toast.makeText(this, "Seja bem vindo!", Toast.LENGTH_LONG).show();
-
-                //Responsável por guardar a sessão do usuário
-                SharedPreferences.Editor editor = sp.edit();
-                //primeiro parâmetro é o nome da preferência, o segundo é caso venha vazio, é setado o ""
-                editor.putInt("idUsuario", usuario.getId());
-                editor.commit();
-
-                chamarTelaPrincipal();
-
-            }else{
-
-                Toast.makeText(this, "Email ou senha incorretos!", Toast.LENGTH_LONG).show();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }*/
 
     public void fazerLogin(View view){
-
-        //Montando um obejto retrofit passando a url base e o converson de Json
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UsuarioService.URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
         // retorna uma classe que implementa UsuarioService
         UsuarioService usuarioService = retrofit.create(UsuarioService.class);
@@ -233,18 +172,85 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void fazerLoginPorEmailFacebook(final String nome, String email){
+    private void fazerLoginPorEmailFacebook(final String nome, final String email){
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(UsuarioService.URL_BASE)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        UsuarioService usuarioService = retrofit.create(UsuarioService.class);
-        Login login = new Login(editTextEmail.getText().toString());
+        final UsuarioService usuarioService = retrofit.create(UsuarioService.class);
+        Login login = new Login(email);
         Call<Usuario> requestUsuario = usuarioService.loginFacebook(login);
 
         //Chamada assíncrona
+        requestUsuario.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Erro: " + response.code(), Toast.LENGTH_LONG).show();
+                }else{
+                    //Requisição retornou com sucesso
+                    Usuario usuario = response.body();
+
+                    //Se o usuário já existir, faz login normalmente
+                    if(usuario != null){
+                        //Responsável por guardar a sessão do usuário
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putInt("idUsuario", usuario.getId());
+                        editor.commit();
+
+                        if(nome != null){
+                            Toast.makeText(getApplicationContext(), "Seja bem vindo " + nome, Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Seja bem vindo", Toast.LENGTH_LONG).show();
+                        }
+
+                        chamarTelaPrincipal();
+
+                    } else{
+                        //Caso o usuário não exista, é criado um com o nome e email recebido do facebook
+                        inserirUsuarioFacebook(email,nome);
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                //Erro de rede
+                Toast.makeText(getApplicationContext(), "Erro: " + t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void inserirUsuarioFacebook(String email, final String nome){
+
+        UsuarioService usuarioService = retrofit.create(UsuarioService.class);
+
+        List<String> doencas = new ArrayList<>() ;
+        List<String> alergias = new ArrayList<>();
+
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(nome);
+        novoUsuario.setIdade(0);
+        novoUsuario.setRg("");
+        novoUsuario.setTelefone("");
+        novoUsuario.setSexo("");
+        novoUsuario.setRua("");
+        novoUsuario.setNumero(0);
+        novoUsuario.setComplemento("");
+        novoUsuario.setBairro("");
+        novoUsuario.setTipoSangue("");
+        novoUsuario.setEmail(email);
+        novoUsuario.setSenha("");
+        novoUsuario.setNome1("");
+        novoUsuario.setNumero1("");
+        novoUsuario.setNome2("");
+        novoUsuario.setNumero2("");
+        novoUsuario.setDoencas(doencas);
+        novoUsuario.setAlergias(alergias);
+
+        Call<Usuario> requestUsuario = usuarioService.inserirUsuarioFacebook(novoUsuario);
+
         requestUsuario.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
@@ -269,7 +275,8 @@ public class MainActivity extends AppCompatActivity {
                         chamarTelaPrincipal();
 
                     } else{
-                        Toast.makeText(getApplicationContext(), "Usuário ou senha inválidos!", Toast.LENGTH_LONG).show();
+                        //Aqui vai o código pra salvar o email e nome do usuário
+                        Toast.makeText(getApplicationContext(), "Erro!", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -278,52 +285,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                //Erro de rede
+
                 Toast.makeText(getApplicationContext(), "Erro: " + t.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });
+
     }
-
-    //Se o usuário já tiver feito o login com o facebook, ele entra normalmente
-    //caso contrário, ele salva o usuário
-    /*public void fazerLoginPorEmailFacebook(String nome, String email){
-
-        try {
-            QueryBuilder<Usuario, Integer> queryBuilder = usuarioDao.queryBuilder();
-            Where<Usuario, Integer> where = queryBuilder.where();
-            where.eq("email", email);
-            PreparedQuery<Usuario> preparedQuery = queryBuilder.prepare();
-            List<Usuario> listaUsuario = usuarioDao.query(preparedQuery);
-
-            if(listaUsuario.size() >0){
-                usuario = listaUsuario.get(0);
-            }
-
-            if(usuario != null){
-                Toast.makeText(this, "Seja bem vindo!", Toast.LENGTH_LONG).show();
-
-                //Responsável por guardar a sessão do usuário
-                SharedPreferences.Editor editor = sp.edit();
-                //primeiro parâmetro é o nome da preferência, o segundo é caso venha vazio, é setado o ""
-                editor.putInt("idUsuario", usuario.getId());
-                editor.commit();
-
-                System.out.println("Usuário Login: " + usuario.getId() + " " + usuario.getNome());
-
-                chamarTelaPrincipal();
-
-            }else{
-
-                salvarUsuarioFacebook(nome,email);
-                chamarTelaPrincipal();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }*/
 
     public void chamarTelaPrincipal(){
         Intent intent = new Intent(this,InformacoesActivity.class);

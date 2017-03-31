@@ -1,14 +1,9 @@
 package br.com.code85.lifepower.helper;
-import java.util.ArrayList;
-
 import br.com.code85.lifepower.model.Login;
 import br.com.code85.lifepower.model.Usuario;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -32,33 +27,11 @@ public interface UsuarioService {
     @POST("usuario/inserir")
     Call<Boolean> inserirUsuario(@Body Usuario usuario);
 
-    //Método para o pré-cadastro somente com email e senha
-    /*@FormUrlEncoded
-    @POST("usuario/inserir")
-    Call<Boolean> loginPost(
-            @Field("nome") String nome,
-            @Field("idade") Integer idade,
-            @Field("rg") String rg,
-            @Field("telefone") String telefone,
-            @Field("sexo") String sexo,
-            @Field("rua") String rua,
-            @Field("numero") Integer numero,
-            @Field("complemento") String complemento,
-            @Field("bairro") String bairro,
-            @Field("tipo_sangue") String tipoSague,
-            @Field("email") String email,
-            @Field("senha") String senha,
-            @Field("nome1") String nome1,
-            @Field("numero1") String numero1,
-            @Field("nome2") String nome2,
-            @Field("numero2") String numero2,
-            @Field("doencas[]") ArrayList<String> doencas,
-            @Field("alergias[]") ArrayList<String> alergias
-            );*/
-
-
     //Método para logar usando apenas o email do Facebook
     @POST("usuario/entrarfacebook")
     Call<Usuario> loginFacebook(@Body Login login);
+
+    @POST("usuario/inserirFacebook")
+    Call<Usuario> inserirUsuarioFacebook(@Body Usuario usuario);
 
 }

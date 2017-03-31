@@ -362,6 +362,92 @@
                     android:background="#99000000"
                     android:textColor="#FFFFFF"/>
 
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="1">
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/familiar1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/familiar1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/numero"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/numeroFamiliar1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/linha"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"/>
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/familiar2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/familiar2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:text="@string/numero"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/numeroFamiliar2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"/>
+                    </TableRow>
+
+                </TableLayout>
+
             </LinearLayout>
 
 
